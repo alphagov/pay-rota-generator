@@ -3,8 +3,7 @@ GOV.UK 2ndline (developer) support rota
 
 Generates a weekly rota with these roles:
 
-- **Primary** and **secondary**, in-hours support
-- **Shadow** *(optional)*, someone who learns the ropes in-hours
+- **Primary** in-hours support
 - **Primary oncall** and **secondary oncall**, the out-of-hours support
 
 
@@ -30,8 +29,6 @@ Input format
 - `name`: string (must be unique)
 - `team`: string (compared stripped and lowercased)-
 - `can_do_inhours_primary`: bool
-- `can_do_inhours_secondary`: bool
-- `can_do_inhours_shadow`: bool
 - `can_do_oncall_primary`: bool
 - `can_do_oncall_secondary`: bool
 - `forbidden_weeks`: integer comma-separated list, weeks unavailable (week 1 = first week of the generated rota)
@@ -53,32 +50,6 @@ Santiago Raine,Platform Health,yes,yes,no,no,yes,
 Chas Stucky,Platform Health,no,no,yes,no,no,
 Ryan Averett,Publishing Access and Security,yes,yes,no,yes,yes,
 Martin Ashby,FE Dev and Accessibility,yes,yes,no,yes,yes,"1,3,4,5,6,7,8"
-Deloris Baldon,FE Dev and Accessibility,yes,yes,no,no,no,
-Nyla Drozd,FE Dev and Accessibility,yes,yes,no,no,no,"1,2"
-Pierre Paulhus,FE Dev and Accessibility,yes,yes,no,no,no,
-Jerome Silveria,Search,yes,yes,no,yes,yes,
-Wilson Friesen,Structured data,yes,yes,no,no,yes,
-Robin Hoose,Search,yes,yes,no,no,yes,
-Floyd Olsson,Search,yes,yes,no,no,yes,
-Lou Meidinger,Search,yes,yes,no,yes,1,"1,2"
-Sharleen Woltz,Search,no,0,1,no,0,
-Ramon Haddock,Search,no,0,1,no,0,
-Jerald Vangundy,Search,yes,yes,no,no,0,
-Theodore Calvery,Taxonomy,yes,yes,no,no,0,
-Dewey Burgett,Publisher Workflow,yes,yes,no,yes,yes,
-Irwin Capehart,Publisher Workflow,yes,yes,no,no,yes,
-Jerold Bayes,Publisher Workflow,yes,yes,no,yes,yes,"5,6,7,12"
-Annalisa Harrow,Publisher Workflow,yes,yes,no,yes,yes,
-Dave Allred,Publisher Workflow,yes,yes,no,yes,yes,
-Rocco Morra,Publisher Workflow,yes,yes,no,no,no,
-Eddie Mccollough,Publisher Workflow,no,0,0,no,no,
-Lacy Auyeung,Publisher Workflow,yes,yes,no,no,yes,
-Glynda Laubscher,Publisher Workflow,no,no,yes,no,no,"1,8,10,11,12"
-Jeannine Demos,Step by step,yes,yes,no,yes,yes,"1,2"
-Vernon Minelli,Step by step,yes,yes,no,no,no,
-Temeka Lowy,Step by step,yes,yes,no,no,yes,
-Benita Kunz,Step by step,yes,yes,no,no,no,
-Aubrey Staiger,Personalisation and programme,no,yes,no,no,no,
 ```
 
 

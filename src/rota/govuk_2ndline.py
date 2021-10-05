@@ -8,7 +8,7 @@ from rota import Rota, basic_rota, NoSatisfyingRotaError
 # A person who can appear in the rota.  People have no names, as
 # 'generate_model' is given a dict 'name -> person'.
 Person = collections.namedtuple(
-    "Person", ["team", "can_do_inhours_primary", "can_do_inhours_secondary", "can_do_inhours_shadow", "can_do_oncall_primary", "can_do_oncall_secondary", "forbidden_weeks"]
+    "Person", ["team", "can_do_inhours_primary", "can_do_oncall_primary", "can_do_oncall_secondary", "forbidden_weeks"]
 )
 
 # A role
@@ -19,10 +19,8 @@ class Roles(enum.Enum):
     """All the different types of role."""
 
     PRIMARY = Role(0, True, False, True)
-    SECONDARY = Role(1, True, False, True)
-    SHADOW = Role(2, True, False, False)
-    PRIMARY_ONCALL = Role(3, False, True, True)
-    SECONDARY_ONCALL = Role(4, False, True, True)
+    PRIMARY_ONCALL = Role(2, False, True, True)
+    SECONDARY_ONCALL = Role(3, False, True, True)
 
 
 class Govuk2ndLineRota(Rota):
@@ -62,10 +60,6 @@ def generate_model(
         for week in range(num_weeks):
             if not p.can_do_inhours_primary:
                 prob += rota[week, person, Roles.PRIMARY.name] == 0
-            if not p.can_do_inhours_secondary:
-                prob += rota[week, person, Roles.SECONDARY.name] == 0
-            if not p.can_do_inhours_shadow:
-                prob += rota[week, person, Roles.SHADOW.name] == 0
             if not p.can_do_oncall_primary:
                 prob += rota[week, person, Roles.PRIMARY_ONCALL.name] == 0
             if not p.can_do_oncall_secondary:
@@ -102,9 +96,6 @@ def generate_model(
         # [1] Maximise the number of people with assignments
         # This is more important than the other optimisations (which are about reducing weeks which are bad in a fairly minor way) so give it a *100 factor
         obj = pulp.lpSum(assigned[person] for person in people.keys()) * 100
-
-        # [2] Maximise the number of weeks with a shadow
-        obj += pulp.lpSum(rota[week, person, Roles.SHADOW.name] for week in range(num_weeks) for person in people.keys())
 
         prob += obj
 

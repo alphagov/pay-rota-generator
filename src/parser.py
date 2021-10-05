@@ -28,33 +28,21 @@ def govuk_2ndline(rn, row):
 
     errors = []
 
-    if len(row) != 8:
-        errors.append(f"Row {rn}: should have 8 elements (got {len(row)})")
+    if len(row) != 6:
+        errors.append(f"Row {rn}: should have 6 elements (got {len(row)})")
         raise CSVException(errors)
 
     person = row[0].strip()
     team = row[1].lower().strip()
     can_do_inhours_primary_str = row[2].strip()
-    can_do_inhours_secondary_str = row[3].strip()
-    can_do_inhours_shadow_str = row[4].strip()
-    can_do_oncall_primary_str = row[5].strip()
-    can_do_oncall_secondary_str = row[6].strip()
-    forbidden_weeks_str = row[7].strip()
+    can_do_oncall_primary_str = row[3].strip()
+    can_do_oncall_secondary_str = row[4].strip()
+    forbidden_weeks_str = row[5].strip()
 
     try:
         can_do_inhours_primary = to_bool(can_do_inhours_primary_str)
     except ValueError:
         errors.append(f"Row {rn}: 'can_do_inhours_primary' field should be a boolean (got '{can_do_inhours_primary_str}')")
-
-    try:
-        can_do_inhours_secondary = to_bool(can_do_inhours_secondary_str)
-    except ValueError:
-        errors.append(f"Row {rn}: 'can_do_inhours_secondary' field should be a boolean (got '{can_do_inhours_secondary_str}')")
-
-    try:
-        can_do_inhours_shadow = to_bool(can_do_inhours_shadow_str)
-    except ValueError:
-        errors.append(f"Row {rn}: 'can_do_inhours_shadow' field should be a boolean (got '{can_do_inhours_shadow_str}')")
 
     try:
         can_do_oncall_primary = to_bool(can_do_oncall_primary_str)
@@ -78,8 +66,6 @@ def govuk_2ndline(rn, row):
         person: govuk_2ndline_rota.Person(
             team=team,
             can_do_inhours_primary=can_do_inhours_primary,
-            can_do_inhours_secondary=can_do_inhours_secondary,
-            can_do_inhours_shadow=can_do_inhours_shadow,
             can_do_oncall_primary=can_do_oncall_primary,
             can_do_oncall_secondary=can_do_oncall_secondary,
             forbidden_weeks=forbidden_weeks,

@@ -1,62 +1,41 @@
-govuk-rota-generators
-=====================
+# govuk-pay-rota-generators
 
-It does what it says on the tin.
+This generates a support rota for GOV.UK Pay. This repo has been forked from [govuk-rota-generators](https://github.com/barrucadu/govuk-rota-generators).
 
+## Setting up
+
+* Follow instructions at https://github.com/coin-or/Cbc to download cbc.
+* You also need `python3` and `pip3`.
+* Run `pip3 install -r requirements.txt`
+
+## How to use
 ```
 $ python3 src
 Usage:
   cli.py <file> [--num-weeks=<n>] [--max-in-hours-shifts=<n>] [--max-on-call-shifts=<n>]
   cli.py (-h | --help)
 
-$ time python3 src demo.csv
-week,primary,secondary,shadow,primary_oncall,secondary_oncall
-1,Neil Hockenberry,Aubrey Staiger,Sharleen Woltz,Oswaldo Bonham,Jarrett Hord
-2,Deloris Baldon,Rocco Morra,,Martin Ashby,Robin Hoose
-3,Emanuel Leinen,Vernon Minelli,,Lou Meidinger,Renae Paton
-4,Floyd Olsson,Irwin Capehart,,Dewey Burgett,Jerold Bayes
-5,Pierre Paulhus,Sammie Shew,,Lou Meidinger,Wilson Friesen
-6,Jerome Silveria,Benita Kunz,Glynda Laubscher,Oswaldo Bonham,Temeka Lowy
-7,Jame Truss,Nyla Drozd,,Annalisa Harrow,Renae Paton
-8,Ryan Averett,Jerald Vangundy,,Jeannine Demos,Jerold Bayes
-9,Theodore Calvery,Temeka Lowy,Chas Stucky,Dave Allred,Grant Kornfeld
-10,Martin Ashby,Lacy Auyeung,Ramon Haddock,Annalisa Harrow,Oswaldo Bonham
-11,Bessie Engebretson,Wilson Friesen,,Jeannine Demos,Jerold Bayes
-12,Dave Allred,Lou Meidinger,,Annalisa Harrow,Santiago Raine
-
-real    0m24.531s
-user    0m24.408s
-sys     0m0.121s
+$ time python3 src govuk_pay_people.csv --max-in-hours-shifts=1 --max-on-call-shifts=2 --num-weeks=12
+week,primary,primary_oncall,secondary_oncall
+1,Grant Kornfeld,Oswaldo Bonham,Bessie Engebretson
+2,Martin Ashby,Jarrett Hord,Santiago Raine
+3,Renae Paton,Oswaldo Bonham,Emanuel Leinen
+4,Bessie Engebretson,Chas Stucky,Harry Poopoo
+5,Santiago Raine,Jarrett Hord,Jame Truss
+6,Emanuel Leinen,Harry Poopoo,Ryan Averett
+7,Neil Hockenberry,Martin Ashby,Bessie Engebretson
+8,Ryan Averett,Sammie Shew,Santiago Raine
+9,Jarrett Hord,Jame Truss,Martin Ashby
+10,Chas Stucky,Sammie Shew,Renae Paton
+11,Harry Poopoo,Grant Kornfeld,Neil Hockenberry
+12,Oswaldo Bonham,Chas Stucky,Emanuel Leinen
+        0.74 real         0.62 user         0.06 sys
 ```
 
 See the `docs` directory for explanations of how the rotas are defined
 and generated.
 
-
-Dependencies
-------------
-
-You need [Cbc][] (**C**oin-or **b**ranch and **c**ut) installed and in
-your `$PATH`.  Other dependencies are listed in
-`requirements-freeze.txt` and can be installed with `pip`.
-
-[Cbc]: https://projects.coin-or.org/Cbc
-
-### Running in Docker
-
-Rather than install dependencies to your host machine, you can
-generate a rota in a Docker container:
-
-```bash
-$ docker run -it --rm -v $(pwd):/src -w /src python:3.9 bash
-$ apt-get update && apt-get install -y coinor-cbc
-$ pip install -r requirements-freeze.txt
-$ python3 src demo.csv
-```
-
-
-Mathematical background
------------------------
+### Mathematical background
 
 This uses an approach called [integer linear programming][] (ILP), via
 the [PuLP library][].  A reasonable introduction to ILP for solving
