@@ -7,9 +7,7 @@ from rota import Rota, basic_rota, NoSatisfyingRotaError
 
 # A person who can appear in the rota.  People have no names, as
 # 'generate_model' is given a dict 'name -> person'.
-Person = collections.namedtuple(
-    "Person", ["team", "can_do_inhours_primary", "can_do_oncall_primary", "can_do_oncall_secondary", "forbidden_weeks"]
-)
+Person = collections.namedtuple("Person", ["team", "can_do_inhours_primary", "can_do_oncall_primary", "can_do_oncall_secondary", "forbidden_weeks"])
 
 # A role
 Role = collections.namedtuple("Role", ["n", "inhours", "oncall", "mandatory"])
